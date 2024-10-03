@@ -3,27 +3,30 @@
 pragma solidity ^0.8.20;
 
 import { IOAppCore, ILayerZeroEndpointV2 } from "../shared/interfaces/IOAppCore.sol";
+import { Initializable } from "../../lib/solady/src/utils/Initializable.sol";
 
 /**
  * @title OAppCore
  * @dev Abstract contract implementing the IOAppCore interface with basic OApp configurations.
  * @dev The Ownable library was removed, please ensure you handle security for impacted functions.
+ * @dev The constructor was replaced with _initializeOAppCore.
  */
-abstract contract OAppCore is IOAppCore {
+abstract contract OAppCoreUpgradeable is IOAppCore, Initializable {
     // The LayerZero endpoint associated with the given OApp
-    ILayerZeroEndpointV2 public immutable endpoint;
+    ILayerZeroEndpointV2 public endpoint;
 
     // Mapping to store peers associated with corresponding endpoints
     mapping(uint32 eid => bytes32 peer) public peers;
 
     /**
-     * @dev Constructor to initialize the OAppCore with the provided endpoint and delegate.
+     * @dev Initializes the OAppCore with the provided endpoint and delegate.
+     * @dev The constructor was replaced with this initializer.
      * @param _endpoint The address of the LOCAL Layer Zero endpoint.
      * @param _delegate The delegate capable of making OApp configurations inside of the endpoint.
      *
      * @dev The delegate typically should be set as the owner of the contract.
      */
-    constructor(address _endpoint, address _delegate) {
+    function _initializeOAppCore(address _endpoint, address _delegate) internal virtual onlyInitializing {
         endpoint = ILayerZeroEndpointV2(_endpoint);
 
         if (_delegate == address(0)) revert InvalidDelegate();

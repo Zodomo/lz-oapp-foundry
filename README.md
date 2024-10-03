@@ -1,4 +1,4 @@
-# This is a custom rebuild of LayerZero's oapp-evm package, eliminating the need for the devtools library. OpenZeppelin's Ownable has been removed entirely, with all affected functions set to virtual. OpenZeppelin's SafeERC20 and SafeCast were replaced with Solady's SafeTransferLib and SafeCastLib. openzeppelin-contracts and solidity-bytes-utils are also imported directly. Node is not required, and everything should work within foundry natively.
+# This is a custom rebuild of LayerZero's oapp-evm package, eliminating the need for the devtools library. OpenZeppelin's Ownable has been removed entirely, with all affected functions set to virtual. OpenZeppelin's SafeERC20 and SafeCast were replaced with Solady's SafeTransferLib and SafeCastLib. The constructors were replaced with initializers. openzeppelin-contracts and solidity-bytes-utils are also imported directly. Node is not required, and everything should work within foundry natively.
 
 # There is no guarantee this repo will be maintained.
 

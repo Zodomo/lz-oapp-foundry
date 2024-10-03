@@ -14,14 +14,18 @@ import { OAppCore } from "./OAppCore.sol";
  * @title OApp
  * @dev Abstract contract serving as the base for OApp implementation, combining OAppSender and OAppReceiver functionality.
  * @dev The Ownable library was removed, please ensure you handle security for impacted functions.
+ * @dev The constructor was replaced with _initializeOApp.
  */
 abstract contract OApp is OAppSender, OAppReceiver {
     /**
-     * @dev Constructor to initialize the OApp with the provided endpoint and owner.
+     * @dev Initializes the OApp with the provided endpoint and owner.
+     * @dev The constructor was replaced with this initializer.
      * @param _endpoint The address of the LOCAL LayerZero endpoint.
      * @param _delegate The delegate capable of making OApp configurations inside of the endpoint.
      */
-    constructor(address _endpoint, address _delegate) OAppCore(_endpoint, _delegate) {}
+    function _initializeOApp(address _endpoint, address _delegate) internal virtual onlyInitializing {
+        _initializeOAppCore(_endpoint, _delegate);
+    }
 
     /**
      * @notice Retrieves the OApp version information.
